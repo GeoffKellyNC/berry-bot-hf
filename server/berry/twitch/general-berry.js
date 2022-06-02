@@ -5,7 +5,7 @@ const { ChatClient } = require('twitch-chat-client');
 const fs = promises;
 
 
-const target = 'rhyezbot';
+const target = process.env.TARGET;
 
 
 
