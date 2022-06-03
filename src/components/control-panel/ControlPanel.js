@@ -37,6 +37,7 @@ export default connect(mapStateToProps, actions)(ControlPanel);
 const ControlPanelStyled = styled.div`
     color: white;
     width: 50%;
+    
 
 
 `

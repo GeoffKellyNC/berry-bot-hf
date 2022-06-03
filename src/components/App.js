@@ -32,7 +32,7 @@ const AppStyled = styled.div`
 
   .app-content {
     display: flex;
-    flex-direction: row;
+    flex-direction: ;
     justify-content: space-between;
     width: 100%;
   }

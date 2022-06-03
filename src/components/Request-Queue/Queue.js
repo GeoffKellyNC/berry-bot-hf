@@ -59,10 +59,12 @@ export default connect(mapStateToProps, actions)(Queue);
 const QueueStyled = styled.div`
   color: white;
   font-family: ${(pr) => pr.theme.fonts.primary};
-  background: ${(pr) => pr.theme.colors.lightBlack};
+  ${'' /* background: ${(pr) => pr.theme.colors.lightBlack}; */}
   width: 50%;
   height: 100%;
   border-radius: 16px;
+  ${'' /* background: rgba( 251, 15, 67, 0.15 ); */}
+
 
   .queue-header-text {
     font-size: ${(pr) => pr.theme.fontSizes.xlarge};

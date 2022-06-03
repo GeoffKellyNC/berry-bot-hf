@@ -37,7 +37,13 @@ const VotingStyled = styled.div`
     align-items: center;
     width: 50%;
     font-family: ${(pr) => pr.theme.fonts.primary};
-    background: ${(pr) => pr.theme.colors.lightBlack};
+    ${'' /* background: ${(pr) => pr.theme.colors.lightBlack}; */}
+    ${'' /* background: rgba( 0, 188, 212, 0.2 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 2.5px );
+    -webkit-backdrop-filter: blur( 2.5px ); */}
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    border-radius: 10px;
 
     .start-vote-btn {
         margin: 1rem;

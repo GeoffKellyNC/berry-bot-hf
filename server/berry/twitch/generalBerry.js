@@ -68,9 +68,9 @@ async function generalBerry() {
 
         switch (message){
             case '!ping':
-                chatClient.say(channel, 'pong ' + pings.length);
-                addPing(user);
                 getPings();
+                chatClient.say(channel, 'pong ' + (pings.length + 1));
+                addPing(user);
                 break;
             default: 
                 return
