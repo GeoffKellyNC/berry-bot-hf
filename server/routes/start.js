@@ -14,7 +14,6 @@ router.post("/", (req, res) => {   // Start Berry
     if (data === 'startBot'){
       startBerry();
     }
-    res.send('Bot Started')
     res.sendStatus(200);
   })
 

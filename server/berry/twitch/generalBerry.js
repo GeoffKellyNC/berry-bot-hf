@@ -1,55 +1,84 @@
 
-const { RefreshableAuthProvider, StaticAuthProvider } = require('twitch-auth');
-const { ChatClient } = require('twitch-chat-client');
+// import { RefreshingAuthProvider } from '@twurple/auth';
+
+const  { RefreshingAuthProvider } = require('@twurple/auth');
+
+const { promises: fs } = require('fs');
+
+const path = require('path');
+
+const axios = require('axios');
+
+
+
+const { ChatClient } = require('@twurple/chat');
 require('dotenv').config();
 
 
 
 
-const target = 'rhyezbot';
+const TARGET = process.env.TARGET;
 
+const PINGS_URL = process.env.PINGS_URL
 
+let pings
+
+const getPings = () =>  {
+        axios.get(PINGS_URL)
+        .then(res => {
+            console.log('getPings Res: ', res.data);
+            pings = res.data;
+            return pings.length;
+        })
+        .catch(err => console.error(err) )
+}
+
+const addPing = (userName) => {
+    return axios.post(PINGS_URL, {
+        user: userName
+    })
+    .then(res => {
+        const pings = res.data;
+        return pings;
+    }
+    )
+    .catch(err => console.error(err) )
+}
 
 async function generalBerry() {
     const clientId = process.env.CLIENT_ID;
     const clientSecret = process.env.CLIENT_SECRET;
-    const accessToken = process.env.ACCESS_TOKEN;
-    const refreshToken = process.env.REFRESH_TOKEN;
-    const auth = new RefreshableAuthProvider(
-        new StaticAuthProvider(clientId, accessToken),
+    const tokenLocation = path.join(__dirname, 'tokens.json')
+    const tokenData = JSON.parse(await fs.readFile(tokenLocation, 'utf8'));
+    const authProvider = new RefreshingAuthProvider(
         {
+            clientId,
             clientSecret,
-            refreshToken
-        }
+            onRefresh: async newTokenData => await fs.writeFile(tokenLocation, JSON.stringify(newTokenData, null, 4), 'UTF-8')
+        },
+        tokenData
     );
 
-    const chatClient = new ChatClient(auth, { channels: [target] });
-    await chatClient.connect();
-
-    const date = new Date();
-
-    console.log(`Connected to twitch at ${date}`)
-
-    chatClient.onMessage((channel, user, message, self) => {
-
-        console.log(`
-        USER 🧍: ${user}  ➡ 
-        MESSAGE 💬: ${message} ➡ 
-        CHANNEL 📺:  ${channel} ➡ 
-        📆 ${date}`)
+    const chatClient = new ChatClient({ authProvider, channels: [TARGET] });
+	await chatClient.connect();
+    console.log('General Berry Connected');
 
 
-    switch(message) {
-        case '!ping':
-            chatClient.say(channel, 'pong');
-            break;
-        default:
-            return
-    }
+    chatClient.onMessage((channel, user, message) => {
 
+        switch (message){
+            case '!ping':
+                chatClient.say(channel, 'pong ' + pings.length);
+                addPing(user);
+                getPings();
+                break;
+            default: 
+                return
+        }
+    })
 
-    });
 
 }
+getPings()
 
 module.exports = {generalBerry};

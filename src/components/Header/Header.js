@@ -24,7 +24,7 @@ const HeaderStyled = styled.div`
   color: white;
   min-width: 100%;
   height: 8rem;
-  border-radius: 16px;
+  ${'' /* border-radius: 16px; */}
 
   .header-title {
     font-size: ${(pr) => pr.theme.fontSizes.large};

@@ -18,7 +18,6 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
-console.log(process.env)
 
 //? ---- Routes ----//
 app.use("/start", routerStart);

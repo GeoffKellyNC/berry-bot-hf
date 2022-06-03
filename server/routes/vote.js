@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { votingBerry } = require('../berry/twitch/utils/votingBerry');
+const { votingBerry } = require('../berry/twitch/votingBerry');
 
 
 const startVote = () => {
@@ -15,7 +15,6 @@ router.post("/", (req, res) => {
     if (data === 'startVote'){
         startVote();
     }
-    res.send('Voting Started')
     res.sendStatus(200);
 
 })
