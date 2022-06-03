@@ -19,12 +19,9 @@ export const fetchQueue = () => (dispatch) => {
 };
 
 export const deleteQueueItem = (id) => (dispatch) => {
-  const headers = {
-    "Authorization": "Bearer ya29.c.b0AXv0zTMSFGGMj3GFqd89_kdjFAJA2UY-mr5ckq3-Ahm66Ov2csrQb7AE8POMUEQbFUPuPQcnBt4M9AxEAnkqQIV06i-NhrpIy9apBL_gmOoUDHZHAaoWrZzHXmRe1GLa7p2bLEn38a-X7Quvh6mjRWvYtAm-SKITTVH84DbJplO_HiWKYx9wJo9hLfdJMLD1QQtPOBUzweDbqoGlmNz_1isGRgAMNurO",
-  };
 
   axios
-    .delete(`${QUEUE_API}/${id}`, headers)
+    .delete(`${QUEUE_API}/${id}`)
     .then((res) => {
       const queue = res.data;
       dispatch({
@@ -35,7 +32,7 @@ export const deleteQueueItem = (id) => (dispatch) => {
 };
 
 export const startBot = () => (dispatch) => {
-  axios.post("http://localhost:3001/start", {
+  axios.post(`http://localhost:9001/start`, {
     data: "startBot"
     })
     .then(function (res) {
@@ -54,7 +51,7 @@ export const startBot = () => (dispatch) => {
 }
 
 export const startVote = () => (dispatch) => {
-  axios.post("http://localhost:3001/startVote", {
+  axios.post(`http://localhost:9001/vote`, {
     data: "startVote"
     })
     .then(function (res) {
@@ -74,7 +71,7 @@ export const startVote = () => (dispatch) => {
 
 
 export const reloadServer = () => (dispatch) => {
-  axios.post("http://localhost:3001/reset", {
+  axios.post(`http://localhost:9001/reset`, {
     data: "restartServer"
     })
     .then(function (res) {
