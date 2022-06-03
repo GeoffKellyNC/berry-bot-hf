@@ -1,15 +1,16 @@
 import axios from "axios";
-
-
 import * as types from "./action-types";
+// const {config} = require('dotenv');
 
-const QUEUE_API = 'https://6296b12957b625860611e8c6.mockapi.io/queue'
+
+const QUEUE_API = process.env.REACT_APP_QUEUE_API;
 
 // const QUEUE_API = 'http://localhost:9000/queue'
 
 
 export const fetchQueue = () => (dispatch) => {
   axios.get(QUEUE_API).then((res) => {
+    console.log('Front End Variables ', process.env)
     const queue = [...res.data];
     dispatch({
       type: types.GET_QUEUE,
