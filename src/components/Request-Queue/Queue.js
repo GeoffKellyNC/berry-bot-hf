@@ -88,5 +88,5 @@ const QueueStyled = styled.div`
   .refresh-btn:hover {
     background: ${(pr) => pr.theme.colors.secondary};
     color: white;
-  }
+  } 
 `;
