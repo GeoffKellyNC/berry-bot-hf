@@ -6,7 +6,7 @@ const client = new tmi.Client({
 	options: { debug: true },
 	identity: {
 		username: 'xberrybot',
-		password: 'oauth:4itmfoj1xdfcwyl5ihq76xr2ywkx5t'
+		password: process.env.OAUTH_TOKEN
 	},
 	channels: [ 'xberrybot' ]
 });
@@ -27,4 +27,4 @@ client.on('message', (channel, tags, message, self) => {
 		// "@alca, heya!"
 		client.say(channel, `@${tags.username}, heya!`);
 	}
-});
+}); 
