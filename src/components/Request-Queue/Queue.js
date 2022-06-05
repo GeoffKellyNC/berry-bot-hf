@@ -24,7 +24,7 @@ function Queue(props) {
     <QueueStyled>
       <h1 className="queue-header-text">Queue</h1>
       <button onClick={refreshQueue} className="refresh-btn">
-        Refresh
+        Refresh Queue
       </button>
       <div className="queue-items">
         {
@@ -83,10 +83,26 @@ const QueueStyled = styled.div`
     margin-bottom: 10px;
     transition: all 0.3s ease;
     width: 10em;
+    font-size: ${(pr) => pr.theme.fontSizes.small};
+    cursor: pointer;
+    font-family: ${(pr) => pr.theme.fonts.primary};
   }
 
   .refresh-btn:hover {
     background: ${(pr) => pr.theme.colors.secondary};
     color: white;
   } 
+
+  @media (max-width: 1220px) {
+    width: 100%;
+  }
+
+  @media (max-width: 585px) {
+    .refresh-btn {
+      ${'' /* center button */}
+      margin: 0 auto;
+      display: block;
+      width: 100%;
+
+  }
 `;

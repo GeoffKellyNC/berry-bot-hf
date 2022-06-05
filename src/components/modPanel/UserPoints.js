@@ -49,5 +49,9 @@ const UserPointsStyled = styled.div`
         margin-left: 25px;
     }
 
+    @media (max-width: 1220px) {
+    width: 100%;
+  }
+
 
 `

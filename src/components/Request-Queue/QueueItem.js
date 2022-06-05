@@ -100,6 +100,19 @@ const QueueItemStyled = styled.div`
     font-size: ${(pr) => pr.theme.fontSizes.small};
     color: ${(pr) => pr.theme.colors.accent};
     cursor: pointer;
+  }
 
+  @media (max-width: 585px) {
+    .item-text {
+      flex-direction: column;
+    }
+
+    .item-title {
+      font-size: ${(pr) => pr.theme.fontSizes.small};
+    }
+
+    .delete-btn {
+      font-size: ${(pr) => pr.theme.fontSizes.small};
+    }
   }
 `;

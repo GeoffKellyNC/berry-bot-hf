@@ -11,12 +11,9 @@ function Voting(props) {
 
   return (
     <VotingStyled>
-        <button onClick={startVote} className="  start-vote-btn">
+        <button onClick={startVote} className="  start-vote-btn disabled">
             Start Vote
         </button>
-        {
-            botData.isVoting === true ? <p className="is-voting-text">Voting is running</p> : <p className="is-not-voting-text">Voting is not running</p>
-        }
     </VotingStyled>
   )
 }
@@ -31,19 +28,8 @@ export default connect(mapStateToProps, actions)(Voting)
 
 
 const VotingStyled = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 50%;
     font-family: ${(pr) => pr.theme.fonts.primary};
-    ${'' /* background: ${(pr) => pr.theme.colors.lightBlack}; */}
-    ${'' /* background: rgba( 0, 188, 212, 0.2 );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 2.5px );
-    -webkit-backdrop-filter: blur( 2.5px ); */}
-    border: 1px solid rgba( 255, 255, 255, 0.18 );
-    border-radius: 10px;
+
 
     .start-vote-btn {
         margin: 1rem;
@@ -55,6 +41,8 @@ const VotingStyled = styled.div`
         font-size: 16px;
         font-family: ${(pr) => pr.theme.fonts.primary};
         cursor: pointer;
+        height: 3rem;
+        width: 8rem;
         outline: none;
         transition: all 0.2s ease-in-out;
         &:hover {
@@ -66,18 +54,6 @@ const VotingStyled = styled.div`
 
     .disabled{
         pointer-events: none;
-    }
-
-    .is-voting-text {
-        color: green;
-        font-size: 1.2rem;
-        font-family: ${(pr) => pr.theme.fonts.primary};
-    }
-
-    .is-not-voting-text {
-        color: red;
-        font-size: 1.2rem;
-        font-family: ${(pr) => pr.theme.fonts.primary};
     }
 
 `

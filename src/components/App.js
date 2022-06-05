@@ -11,19 +11,12 @@ import ModPanel from "./modPanel/ModPanel";
 
 function App() {
 
-
-
-
-
-
   return (
     <AppStyled className="App">
       <Header />
       <div className="app-content">
-        <div className="top-row">
-          <Queue />
-          <ControlPanel />
-        </div>
+        <ControlPanel />
+        <Queue />
         <ModPanel />
       </div>
     </AppStyled>
@@ -34,19 +27,14 @@ export default App;
 
 const AppStyled = styled.div`
 
-  .top-row {
-    margin: 5%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
-  }
+ 
 
 
   @media (max-width: 1150px) {
     .app-content {
       flex-direction: column;
       align-items: center;
+    }
   }
 
 `;

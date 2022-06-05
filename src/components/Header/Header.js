@@ -29,8 +29,8 @@ const HeaderStyled = styled.div`
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur( 2.5px );
   -webkit-backdrop-filter: blur( 2.5px );
-  border-radius: 10px;
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  ${'' /* border-radius: 10px; */}
+  ${'' /* border: 1px solid rgba( 255, 255, 255, 0.18 ); */}
 
   .header-title {
     font-size: ${(pr) => pr.theme.fontSizes.large};

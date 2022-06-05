@@ -21,10 +21,13 @@ function ControlPanel(props) {
 
     return (
         <ControlPanelStyled>
-            <BotPower botData={botData} startBot={startBot} />
-            <ReloadBot reloadServer={reloadServer} botData = {botData} />
-            <Voting  />
-            <Moderation botData = {botData} startMod = {startMod} />
+            <h2 className = 'control-header'> Bot Controls </h2>
+            <div className='control-btns'>
+                <BotPower botData={botData} startBot={startBot} />
+                <ReloadBot reloadServer={reloadServer} botData = {botData} />
+                <Voting  />
+                <Moderation botData = {botData} startMod = {startMod} />
+            </div>
         </ControlPanelStyled>
     )
 }
@@ -38,9 +41,27 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, actions)(ControlPanel);
 
 const ControlPanelStyled = styled.div`
-    color: white;
-    width: 50%;
-    margin: 0 2%;
+
+
+    .control-header {
+        font-size: ${(pr) => pr.theme.fontSizes.large};
+        font-family: ${(pr) => pr.theme.fonts.primary};
+        margin-bottom: 1rem;
+        color: ${(pr) => pr.theme.colors.primary};
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .control-btns {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+   
+   
     
 
 
