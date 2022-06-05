@@ -72,7 +72,7 @@ const QueueItemStyled = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin: 0 auto;
+    margin: 0 auto; 
   }
 
   .sub-link {
