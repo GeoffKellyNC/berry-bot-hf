@@ -9,6 +9,8 @@ const path = require('path');
 
  const TARGET = process.env.TARGET;
 
+ const POINTS_API = process.env.POINTS_API
+
  async function moderationBerry () {
     const clientId = process.env.CLIENT_ID;
     const clientSecret = process.env.CLIENT_SECRET;
@@ -28,20 +30,31 @@ const path = require('path');
     console.log('Moderation Berry Connected');
 
     async function getPointsData() {
-       const response = await axios.get('https://629aadcfcf163ceb8d0d50f3.mockapi.io/points')
+       const response = await axios.get(POINTS_API);
        return response.data;   
     }
 
     async function patchUserPoints(id, point) {
-        await axios.patch(`https://629aadcfcf163ceb8d0d50f3.mockapi.io/points/${id}`, {points: point})
+        await axios.patch(`${POINTS_API}/${id}`, {points: point})
             .then(console.log(`${id}'s points have been updated to ${point}`))
             .catch(err => console.log(err))
         
     }
 
     async function setUserPoints(obj) {
-        const response = await axios.post('https://629aadcfcf163ceb8d0d50f3.mockapi.io/points', obj).catch(err => console.log(err)); 
+        const response = await axios.post(POINTS_API, obj).catch(err => console.log(err)); 
         return response.data;
+    }
+
+    async function moderationAction(channel,user, points){
+        console.log('Moderation Action');
+        console.log('User: ' + user, 'Points: ' + points);
+        if (points <= 3) return
+        if(points > 4) {
+             chatClient.say(`@${user} has been timed!`);
+            await chatClient.timeout(channel, user, 30, 'Berry Point Ban > 8');
+            console.log(`${user} has been timedout!`);
+        }
     }
 
     let pointsData = await getPointsData();
@@ -61,6 +74,7 @@ const path = require('path');
                 const userId = userObj.id;
                 const newPoints = userPoints + 1;
                 await patchUserPoints(userId, newPoints);
+                await moderationAction(channel, user, newPoints);
                 const newPointsData = await getPointsData();
                 pointsData = newPointsData;
                 console.log("User: " + user + " Found! Points Updated");

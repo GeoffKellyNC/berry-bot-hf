@@ -12,7 +12,6 @@ const POINTS_API = process.env.REACT_APP_POINTS_API;
 
 export const fetchQueue = () => (dispatch) => {
   axios.get(QUEUE_API).then((res) => {
-    console.log('Front End Variables ', process.env)
     const queue = [...res.data];
     dispatch({
       type: types.GET_QUEUE,
