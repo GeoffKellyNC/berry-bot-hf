@@ -45,7 +45,17 @@ function botData (state = {
   }
 }
 
+function userPoints(state = [], action) {
+  switch (action.type) {
+    case types.GET_POINTS:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({ 
   count, 
   queue,
-  botData });
+  botData,
+  userPoints });

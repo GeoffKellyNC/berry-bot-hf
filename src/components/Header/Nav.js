@@ -4,7 +4,7 @@ import styled from 'styled-components'
 function Nav() {
   return (
     <NavStyled>
-        <p>Home</p>
+        {/* <p>Home</p> */}
     </NavStyled>
   )
 }

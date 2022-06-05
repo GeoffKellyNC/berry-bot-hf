@@ -6,7 +6,7 @@ import Nav from "./Nav";
 function Header() {
   return (
     <HeaderStyled>
-      <p className="header-title">hFernz Queue</p>
+      <p className="header-title">Berry Bot HQ</p>
       <p className = 'tag-text'>Berry Bot Command</p>
       <Nav />
     </HeaderStyled>

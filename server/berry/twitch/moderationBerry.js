@@ -4,14 +4,10 @@ const { bannedWords } = require('./data/bannedWords');
 const { ChatClient } = require('@twurple/chat');
 require('dotenv').config();
 
-
 const axios = require('axios');
 const path = require('path');
 
-
  const TARGET = process.env.TARGET;
-
-
 
  async function moderationBerry () {
     const clientId = process.env.CLIENT_ID;
@@ -31,8 +27,6 @@ const path = require('path');
 	await chatClient.connect();
     console.log('Moderation Berry Connected');
 
-  
-
     async function getPointsData() {
        const response = await axios.get('https://629aadcfcf163ceb8d0d50f3.mockapi.io/points')
        return response.data;   
@@ -50,9 +44,7 @@ const path = require('path');
         return response.data;
     }
 
-
     let pointsData = await getPointsData();
-
 
     await chatClient.onRegister(() => { 
         chatClient.say(TARGET, 'Chat Moderation is active');
@@ -62,20 +54,18 @@ const path = require('path');
         if (bannedWords.some(word => message.includes(word))) {
             chatClient.say(channel, `@${user} Please watch your language`);
             const names = pointsData.map(user => user.user);
-            console.log('names: ', names);
-            console.log('Name Included?: ', names.includes(user));
+
             if (names.includes(user)) {
-                // check to see if user exists in array of objects
                 const userObj = pointsData.find(obj => obj.user === user);
-                console.log('userObj: ', userObj);
                 const userPoints = userObj.points;
                 const userId = userObj.id;
                 const newPoints = userPoints + 1;
                 await patchUserPoints(userId, newPoints);
                 const newPointsData = await getPointsData();
                 pointsData = newPointsData;
-                console.log("User Founud! Points Updated");
+                console.log("User: " + user + " Found! Points Updated");
             }
+            
             if (!names.includes(user)) {
                 setUserPoints({user, points: 1});
                 const newPointsData = await getPointsData();
@@ -85,6 +75,5 @@ const path = require('path');
         }
     })
  }
-
 
  module.exports = {moderationBerry};

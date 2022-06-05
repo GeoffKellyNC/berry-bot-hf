@@ -13,3 +13,5 @@ export const RELOAD_SERVER = "RELOAD_SERVER";
 export const START_VOTE = "START_VOTE";
 
 export const START_MOD = "START_MOD";
+
+export const GET_POINTS = "GET_POINTS";

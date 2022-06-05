@@ -9,12 +9,11 @@ const path = require('path');
 
 const axios = require('axios');
 
+const { periodicBerry } = require('./periodicBerry');
 
 
 const { ChatClient } = require('@twurple/chat');
 require('dotenv').config();
-
-
 
 
 const TARGET = process.env.TARGET;
@@ -25,13 +24,11 @@ const QUEUE_API = process.env.QUEUE_API
 
 const discordLink = 'https://discord.gg/pfZ6dH5KVy'
 
-
 let pings
 
 const getPings = () =>  {
         axios.get(PINGS_URL)
         .then(res => {
-            // console.log('getPings Res: ', res.data);
             pings = res.data;
             return pings.length;
         })
@@ -67,15 +64,15 @@ async function generalBerry() {
     const chatClient = new ChatClient({ authProvider, channels: [TARGET] });
 	await chatClient.connect();
     console.log('General Berry Connected');
+    periodicBerry(authProvider);
 
-
-    chatClient.onMessage((channel, user, message) => {
+    chatClient.onMessage( async (channel, user, message) => {
 
         switch (message){
             case '!ping':
-                getPings();
+                await getPings();
+                await addPing(user);
                 chatClient.say(channel, 'pong ' + (pings.length + 1));
-                addPing(user);
                 break;
                 case '!help':
                     chatClient.say(channel, `@${user} Commands: !ping, !vote, !help, !discord, !points, !queue`)
@@ -108,8 +105,6 @@ async function generalBerry() {
                 return
         }
     })
-
-
 }
 getPings()
 

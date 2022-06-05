@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Header from "./Header/Header";
 import Queue from "./Request-Queue/Queue";
 import ControlPanel from "./control-panel/ControlPanel";
+import ModPanel from "./modPanel/ModPanel";
 
 
 function App() {
@@ -19,8 +20,11 @@ function App() {
     <AppStyled className="App">
       <Header />
       <div className="app-content">
-        <Queue />
-        <ControlPanel />
+        <div className="top-row">
+          <Queue />
+          <ControlPanel />
+        </div>
+        <ModPanel />
       </div>
     </AppStyled>
   );
@@ -30,10 +34,10 @@ export default App;
 
 const AppStyled = styled.div`
 
-  .app-content {
+  .top-row {
     margin: 5%;
     display: flex;
-    flex-direction: ;
+    flex-direction: row;
     justify-content: space-around;
     width: 100%;
   }

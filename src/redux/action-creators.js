@@ -5,6 +5,8 @@ import * as types from "./action-types";
 
 const QUEUE_API = process.env.REACT_APP_QUEUE_API;
 
+const POINTS_API = process.env.REACT_APP_POINTS_API;
+
 // const QUEUE_API = 'http://localhost:9000/queue'
 
 
@@ -111,5 +113,16 @@ export const startMod = () => (dispatch) => {
       isMod: true
     },
   });
+}
+
+export const getPoints = () => (dispatch) => {
+  axios.get(POINTS_API)
+    .then((res) => {
+      const data = res.data;
+      dispatch({
+        type: types.GET_POINTS,
+        payload: data,
+      });
+    })
 }
 
