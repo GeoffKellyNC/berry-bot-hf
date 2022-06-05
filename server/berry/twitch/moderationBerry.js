@@ -1,0 +1,90 @@
+const  { RefreshingAuthProvider } = require('@twurple/auth');
+const { promises: fs } = require('fs');
+const { bannedWords } = require('./data/bannedWords');
+const { ChatClient } = require('@twurple/chat');
+require('dotenv').config();
+
+
+const axios = require('axios');
+const path = require('path');
+
+
+ const TARGET = process.env.TARGET;
+
+
+
+ async function moderationBerry () {
+    const clientId = process.env.CLIENT_ID;
+    const clientSecret = process.env.CLIENT_SECRET;
+    const tokenLocation = path.join(__dirname, 'tokens.json')
+    const tokenData = JSON.parse(await fs.readFile(tokenLocation, 'utf8'));
+    const authProvider = new RefreshingAuthProvider(
+        {
+            clientId,
+            clientSecret,
+            onRefresh: async newTokenData => await fs.writeFile(tokenLocation, JSON.stringify(newTokenData, null, 4), 'UTF-8')
+        },
+        tokenData
+    );
+
+    const chatClient = new ChatClient({ authProvider, channels: [TARGET] });
+	await chatClient.connect();
+    console.log('Moderation Berry Connected');
+
+  
+
+    async function getPointsData() {
+       const response = await axios.get('https://629aadcfcf163ceb8d0d50f3.mockapi.io/points')
+       return response.data;   
+    }
+
+    async function patchUserPoints(id, point) {
+        await axios.patch(`https://629aadcfcf163ceb8d0d50f3.mockapi.io/points/${id}`, {points: point})
+            .then(console.log(`${id}'s points have been updated to ${point}`))
+            .catch(err => console.log(err))
+        
+    }
+
+    async function setUserPoints(obj) {
+        const response = await axios.post('https://629aadcfcf163ceb8d0d50f3.mockapi.io/points', obj).catch(err => console.log(err)); 
+        return response.data;
+    }
+
+
+    let pointsData = await getPointsData();
+
+
+    await chatClient.onRegister(() => { 
+        chatClient.say(TARGET, 'Chat Moderation is active');
+    })
+
+    chatClient.onMessage( async (channel, user, message, self) => {
+        if (bannedWords.some(word => message.includes(word))) {
+            chatClient.say(channel, `@${user} Please watch your language`);
+            const names = pointsData.map(user => user.user);
+            console.log('names: ', names);
+            console.log('Name Included?: ', names.includes(user));
+            if (names.includes(user)) {
+                // check to see if user exists in array of objects
+                const userObj = pointsData.find(obj => obj.user === user);
+                console.log('userObj: ', userObj);
+                const userPoints = userObj.points;
+                const userId = userObj.id;
+                const newPoints = userPoints + 1;
+                await patchUserPoints(userId, newPoints);
+                const newPointsData = await getPointsData();
+                pointsData = newPointsData;
+                console.log("User Founud! Points Updated");
+            }
+            if (!names.includes(user)) {
+                setUserPoints({user, points: 1});
+                const newPointsData = await getPointsData();
+                pointsData = newPointsData;
+                console.log("User Not Found! Points Added");
+            }
+        }
+    })
+ }
+
+
+ module.exports = {moderationBerry};

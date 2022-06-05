@@ -25,13 +25,20 @@ function queue(state = [], action) {
   }
 }
 
-function botData (state = {running: false, connected: false, isVoting: false}, action) {
+function botData (state = {
+  running: false, 
+  connected: false, 
+  isVoting: false, 
+  isMod: false
+  }, action) {
   switch (action.type) {
     case types.RUN_BOT:
       return action.payload;
     case types.RELOAD_SERVER:
       return action.payload;
     case types.START_VOTE:
+      return action.payload;
+    case types.START_MOD:
       return action.payload;
     default:
       return state;

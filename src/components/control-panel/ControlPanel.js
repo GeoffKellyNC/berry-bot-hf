@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import BotPower from './BotPower';
 import ReloadBot from './ReloadBot';
 import Voting from './Voting';
+import Moderation from './Moderation';
 
 function ControlPanel(props) {
 
@@ -14,6 +15,7 @@ function ControlPanel(props) {
         botData, 
         startBot,
         reloadServer,
+        startMod
         } = props;
 
 
@@ -22,6 +24,7 @@ function ControlPanel(props) {
             <BotPower botData={botData} startBot={startBot} />
             <ReloadBot reloadServer={reloadServer} botData = {botData} />
             <Voting  />
+            <Moderation botData = {botData} startMod = {startMod} />
         </ControlPanelStyled>
     )
 }
@@ -37,6 +40,7 @@ export default connect(mapStateToProps, actions)(ControlPanel);
 const ControlPanelStyled = styled.div`
     color: white;
     width: 50%;
+    margin: 0 2%;
     
 
 

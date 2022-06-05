@@ -25,7 +25,7 @@ const HeaderStyled = styled.div`
   min-width: 100%;
   height: 8rem;
   ${'' /* border-radius: 16px; */}
-  background: rgba( 252, 16, 67, 0.75 );
+  background: rgba( 252, 16, 67, 0.55 );
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur( 2.5px );
   -webkit-backdrop-filter: blur( 2.5px );

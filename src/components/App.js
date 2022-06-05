@@ -31,10 +31,18 @@ export default App;
 const AppStyled = styled.div`
 
   .app-content {
+    margin: 5%;
     display: flex;
     flex-direction: ;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
+  }
+
+
+  @media (max-width: 1150px) {
+    .app-content {
+      flex-direction: column;
+      align-items: center;
   }
 
 `;

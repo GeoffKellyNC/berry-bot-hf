@@ -21,12 +21,17 @@ const TARGET = process.env.TARGET;
 
 const PINGS_URL = process.env.PINGS_URL
 
+const QUEUE_API = process.env.QUEUE_API
+
+const discordLink = 'https://discord.gg/pfZ6dH5KVy'
+
+
 let pings
 
 const getPings = () =>  {
         axios.get(PINGS_URL)
         .then(res => {
-            console.log('getPings Res: ', res.data);
+            // console.log('getPings Res: ', res.data);
             pings = res.data;
             return pings.length;
         })
@@ -72,6 +77,33 @@ async function generalBerry() {
                 chatClient.say(channel, 'pong ' + (pings.length + 1));
                 addPing(user);
                 break;
+                case '!help':
+                    chatClient.say(channel, `@${user} Commands: !ping, !vote, !help, !discord, !points, !queue`)
+                    break;
+                case '!discord':
+                    chatClient.say(channel, `@${user} Join our discord: ${discordLink}`)
+                    break;
+                case '!rules':
+                    chatClient.say(channel, `Please follow the rules: https://www.twitch.tv/p/rules. Use !punishment for point information`)
+                    break;
+                case '!punishment':
+                    chatClient.say(channel, `@${user} breaking the rules will earn you a point. Points can be used to get a punishment! So respect the rules please.`)
+                    break;
+                case '!submit':
+                    chatClient.say(channel, `@${user} Join our Discord and send us your track in our #MUSIC channel ${discordLink}`)
+                    break;
+                case '!queue':
+                    axios.get(QUEUE_API)
+                    .then(res => {
+                        let queue = res.data
+                        const names = queue.map(user => user.user)
+                        const numberedNames = names.map((name, index) => `${index + 1}. ${name}`)
+                        chatClient.say(channel, `@${user} The queue is: ${numberedNames.join(' | ')}`)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                    break;
             default: 
                 return
         }

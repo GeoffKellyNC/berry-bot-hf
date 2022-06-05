@@ -11,3 +11,5 @@ export const RUN_BOT = "RUN_BOT";
 export const RELOAD_SERVER = "RELOAD_SERVER";
 
 export const START_VOTE = "START_VOTE";
+
+export const START_MOD = "START_MOD";

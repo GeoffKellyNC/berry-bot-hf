@@ -94,3 +94,22 @@ export const reloadServer = () => (dispatch) => {
   });
 }
 
+export const startMod = () => (dispatch) => {
+  axios.post(`http://localhost:9001/mod`, {
+    data: "startMod"
+    })
+    .then(function (res) {
+      console.log('StartMod Res: ', res);
+    })
+    .catch(err => console.error(err))
+
+  dispatch({
+    type: types.START_MOD,
+    payload: {
+      running: true,
+      connected: true,
+      isMod: true
+    },
+  });
+}
+
