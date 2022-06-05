@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function BotPower({startBot, botData}) {
+function BotPower({startBot}) {
   return (
     <BotPowerStyled>
          <button 
