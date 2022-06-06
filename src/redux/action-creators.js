@@ -7,6 +7,8 @@ const QUEUE_API = process.env.REACT_APP_QUEUE_API;
 
 const POINTS_API = process.env.REACT_APP_POINTS_API;
 
+const LOCAL_URL = 'https://4558-24-211-238-40.ngrok.io'
+
 // const QUEUE_API = 'http://localhost:9000/queue'
 
 
@@ -34,7 +36,7 @@ export const deleteQueueItem = (id) => (dispatch) => {
 };
 
 export const startBot = () => (dispatch) => {
-  axios.post(`http://localhost:9001/start`, {
+  axios.post(`${LOCAL_URL}/start`, {
     data: "startBot"
     })
     .then(function (res) {
@@ -53,7 +55,7 @@ export const startBot = () => (dispatch) => {
 }
 
 export const startVote = () => (dispatch) => {
-  axios.post(`http://localhost:9001/vote`, {
+  axios.post(`${LOCAL_URL}/vote`, {
     data: "startVote"
     })
     .then(function (res) {
@@ -73,7 +75,7 @@ export const startVote = () => (dispatch) => {
 
 
 export const reloadServer = () => (dispatch) => {
-  axios.post(`http://localhost:9001/reset`, {
+  axios.post(`${LOCAL_URL}/reset`, {
     data: "restartServer"
     })
     .then(function (res) {
@@ -96,7 +98,7 @@ export const reloadServer = () => (dispatch) => {
 }
 
 export const startMod = () => (dispatch) => {
-  axios.post(`http://localhost:9001/mod`, {
+  axios.post(`${LOCAL_URL}/mod`, {
     data: "startMod"
     })
     .then(function (res) {

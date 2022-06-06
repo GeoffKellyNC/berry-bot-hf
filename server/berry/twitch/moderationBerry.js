@@ -11,6 +11,85 @@ const path = require('path');
 
  const POINTS_API = process.env.POINTS_API
 
+
+
+ //--------- HELPER FUNCTIONS ---------//
+
+ async function getPointsData() {
+    const response = await axios.get(POINTS_API);
+    return response.data;   
+ }
+
+ async function patchUserPoints(id, point) {
+     await axios.patch(`${POINTS_API}/${id}`, {points: point})
+         .then(console.log(`${id}'s points have been updated to ${point}`))
+         .catch(err => console.log(err))
+     
+ }
+
+ async function setUserPoints(obj) {
+     const response = await axios.post(POINTS_API, obj).catch(err => console.log(err)); 
+     return response.data;
+ }
+
+ async function moderationAction(channel,user, points, chatClient){
+     console.log('Moderation Action');
+     console.log('User: ' + user, 'Points: ' + points);
+     if (points <= 3) return
+     if(points > 5) {
+          chatClient.say(channel,`@${user} has been timed!`);
+         await chatClient.timeout(channel, user, 30, 'Berry Point Ban > 8');
+         console.log(`${user} has been timedout!`);
+     }
+ }
+
+ async function processMessage(user, message, pointsData, chatClient, channel) {
+        try {
+            if (bannedWords.some(word => message.includes(word))) {
+                chatClient.say(channel, `@${user} Please watch your language`);
+                const names = pointsData.map(user => user.user);
+        
+                if (names.includes(user)) {
+                    const userObj = pointsData.find(obj => obj.user === user);
+                    const userPoints = userObj.points;
+                    const userId = userObj.id;
+                    const assignedPoints = await assignPoints(message);
+                    console.log('assignedPoints: ', assignedPoints);
+                    const newPoints = userPoints + assignedPoints;
+                    await patchUserPoints(userId, newPoints);
+                    await moderationAction(channel, user, newPoints, chatClient);
+                    const newPointsData = await getPointsData();
+                    pointsData = newPointsData;
+                    console.log("User: " + user + " Found! Points Updated");
+                }
+                
+                if (!names.includes(user)) {
+                    setUserPoints({user, points: 1});
+                    const newPointsData = await getPointsData();
+                    pointsData = newPointsData;
+                    console.log("User Not Found! Points Added");
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+     
+ }
+
+ function assignPoints(message){
+     const level_1_words = ['nigger', 'wetback', 'chink', 'homo', 'test']
+
+     if (message.includes(level_1_words)) return 5
+
+     if (!message.includes(level_1_words)) return 1
+ }
+
+ //---------------------------------------------------------------------------------------------------------------------//
+
+
+
+ //----------- MAIN FUNCTION -----------//
+
  async function moderationBerry () {
     const clientId = process.env.CLIENT_ID;
     const clientSecret = process.env.CLIENT_SECRET;
@@ -32,42 +111,6 @@ const path = require('path');
 	await chatClient.connect();
     console.log('Moderation Berry Connected');
 
-    async function getPointsData() {
-       const response = await axios.get(POINTS_API);
-       return response.data;   
-    }
-
-    async function patchUserPoints(id, point) {
-        await axios.patch(`${POINTS_API}/${id}`, {points: point})
-            .then(console.log(`${id}'s points have been updated to ${point}`))
-            .catch(err => console.log(err))
-        
-    }
-
-    async function setUserPoints(obj) {
-        const response = await axios.post(POINTS_API, obj).catch(err => console.log(err)); 
-        return response.data;
-    }
-
-    async function moderationAction(channel,user, points){
-        console.log('Moderation Action');
-        console.log('User: ' + user, 'Points: ' + points);
-        if (points <= 3) return
-        if(points > 5) {
-             chatClient.say(channel,`@${user} has been timed!`);
-            await chatClient.timeout(channel, user, 30, 'Berry Point Ban > 8');
-            console.log(`${user} has been timedout!`);
-        }
-    }
-
-    async function assignPoints(message){
-        const level_1_words = ['nigger', 'wetback', 'chink', 'homo', 'test']
-
-        if (message.includes(level_1_words)) return 5
-
-        if (!message.includes(level_1_words)) return 1
-    }
-
     let pointsData = await getPointsData();
 
     await chatClient.onRegister(() => { 
@@ -75,31 +118,8 @@ const path = require('path');
     })
 
     chatClient.onMessage( async (channel, user, message, self) => {
-        if (bannedWords.some(word => message.includes(word))) {
-            chatClient.say(channel, `@${user} Please watch your language`);
-            const names = pointsData.map(user => user.user);
+        await processMessage(user, message, pointsData, chatClient, channel)
 
-            if (names.includes(user)) {
-                const userObj = pointsData.find(obj => obj.user === user);
-                const userPoints = userObj.points;
-                const userId = userObj.id;
-                const assignedPoints = await assignPoints(message);
-                console.log('assignedPoints: ', assignedPoints);
-                const newPoints = userPoints + assignedPoints;
-                await patchUserPoints(userId, newPoints);
-                await moderationAction(channel, user, newPoints);
-                const newPointsData = await getPointsData();
-                pointsData = newPointsData;
-                console.log("User: " + user + " Found! Points Updated");
-            }
-            
-            if (!names.includes(user)) {
-                setUserPoints({user, points: 1});
-                const newPointsData = await getPointsData();
-                pointsData = newPointsData;
-                console.log("User Not Found! Points Added");
-            }
-        }
     })
  }
 
