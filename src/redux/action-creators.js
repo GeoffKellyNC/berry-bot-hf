@@ -7,7 +7,7 @@ const QUEUE_API = process.env.REACT_APP_QUEUE_API;
 
 const POINTS_API = process.env.REACT_APP_POINTS_API;
 
-const LOCAL_URL = 'https://4558-24-211-238-40.ngrok.io'
+const LOCAL_URL = process.env.REACT_APP_LOCAL_URL;
 
 // const QUEUE_API = 'http://localhost:9000/queue'
 
