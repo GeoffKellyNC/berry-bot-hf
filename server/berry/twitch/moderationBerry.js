@@ -23,8 +23,7 @@ const path = require('path');
  async function patchUserPoints(id, point) {
      await axios.patch(`${POINTS_API}/${id}`, {points: point})
          .then(console.log(`${id}'s points have been updated to ${point}`))
-         .catch(err => console.log(err))
-     
+         .catch(err => console.log(err));
  }
 
  async function setUserPoints(obj) {
