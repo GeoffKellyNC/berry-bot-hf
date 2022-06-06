@@ -19,7 +19,11 @@ require('dotenv').config();
 
 
 
-
+async function endProcess(chatClient) {
+    console.log('End Process');
+    await chatClient.disconnect();
+    console.log('Disconnected');
+}
 
 
 
@@ -78,10 +82,7 @@ async function votingBerry() {
             }else{
                 chatClient.say(channel, `@${user} you are not authorized to end the vote`)
             }
-            setTimeout(() => {
-                chatClient.reconnect()
-                console.log('Re connected....')
-            }, 2000);
+            await endProcess(chatClient);
         }
 
 

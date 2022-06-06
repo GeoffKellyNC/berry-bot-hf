@@ -1,3 +1,3 @@
-const bannedWords = ["anal", "anus", "arse", "balls", "bitch", "biatch", "bloody", "blowjob", "blow job", "coon", "cunt", "dick", "dyke", "fag",  "homo",  "nigger", "nigga", "penis", "piss", "prick", "pube", "pussy", "scrotum", "slut", "smegma", "spunk", "twat", "vagina", "wank", "whore", "test"]
+const bannedWords = ["anal", "anus", "arse", "balls", "bitch", "blowjob", "blow job", "coon", "cunt", "dyke", "fag",  "homo",  "nigger", "nigga", "penis", "slut", "smegma", "spunk", "twat", "whore", "test"]
 
 module.exports = {bannedWords}

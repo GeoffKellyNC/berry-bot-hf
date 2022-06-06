@@ -12,7 +12,7 @@ function Voting(props) {
 
   return (
     <VotingStyled>
-        <button onClick={startVote} className="  start-vote-btn disabled">
+        <button onClick={startVote} className="  start-vote-btn">
             Start Vote
         </button>
     </VotingStyled>

@@ -25,7 +25,10 @@ const path = require('path');
         tokenData
     );
 
-    const chatClient = new ChatClient({ authProvider, channels: [TARGET] });
+    const chatClient = new ChatClient({ 
+        authProvider, 
+        channels: [TARGET]
+     });
 	await chatClient.connect();
     console.log('Moderation Berry Connected');
 
@@ -50,11 +53,19 @@ const path = require('path');
         console.log('Moderation Action');
         console.log('User: ' + user, 'Points: ' + points);
         if (points <= 3) return
-        if(points > 4) {
-             chatClient.say(`@${user} has been timed!`);
+        if(points > 5) {
+             chatClient.say(channel,`@${user} has been timed!`);
             await chatClient.timeout(channel, user, 30, 'Berry Point Ban > 8');
             console.log(`${user} has been timedout!`);
         }
+    }
+
+    async function assignPoints(message){
+        const level_1_words = ['nigger', 'wetback', 'chink', 'homo', 'test']
+
+        if (message.includes(level_1_words)) return 5
+
+        if (!message.includes(level_1_words)) return 1
     }
 
     let pointsData = await getPointsData();
@@ -72,7 +83,9 @@ const path = require('path');
                 const userObj = pointsData.find(obj => obj.user === user);
                 const userPoints = userObj.points;
                 const userId = userObj.id;
-                const newPoints = userPoints + 1;
+                const assignedPoints = await assignPoints(message);
+                console.log('assignedPoints: ', assignedPoints);
+                const newPoints = userPoints + assignedPoints;
                 await patchUserPoints(userId, newPoints);
                 await moderationAction(channel, user, newPoints);
                 const newPointsData = await getPointsData();
