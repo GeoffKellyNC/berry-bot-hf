@@ -5,7 +5,8 @@ require('dotenv').config();
 
 
 
-const TARGET = 'xberrybot';
+const TARGET = 'hfernz';
+
 
 const discordLink = 'https://discord.gg/pfZ6dH5KVy'
 

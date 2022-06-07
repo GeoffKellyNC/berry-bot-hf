@@ -7,7 +7,7 @@ require('dotenv').config();
 const axios = require('axios');
 const path = require('path');
 
-const TARGET = 'xberrybot';
+const TARGET = 'hfernz';
 
 
  const POINTS_API = process.env.POINTS_API
