@@ -14,7 +14,8 @@ require('dotenv').config();
 
 
 
- const TARGET = process.env.TARGET;
+const TARGET = 'hfernz';
+
 
 
 

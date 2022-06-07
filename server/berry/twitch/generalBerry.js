@@ -15,7 +15,7 @@ const { ChatClient } = require('@twurple/chat');
 require('dotenv').config();
 
 
-const TARGET = process.env.TARGET;
+const TARGET = 'xberrybot';
 
 const PINGS_URL = process.env.PINGS_URL
 
