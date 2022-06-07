@@ -11,7 +11,6 @@ const axios = require('axios');
 
 const { periodicBerry } = require('./periodicBerry');
 
-
 const { ChatClient } = require('@twurple/chat');
 require('dotenv').config();
 
@@ -66,7 +65,7 @@ async function generalBerry() {
     console.log('General Berry Connected');
     periodicBerry(authProvider);
 
-    chatClient.onMessage( async (channel, user, message) => {
+    chatClient.onMessage( async (channel, user, message) => { 
 
         switch (message){
             case '!ping':

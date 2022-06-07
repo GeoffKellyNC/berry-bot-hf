@@ -20,12 +20,9 @@ require('dotenv').config();
 
 
 async function endProcess(chatClient) {
-    console.log('End Process');
-    await chatClient.disconnect();
+    await chatClient.quit();
     console.log('Disconnected');
 }
-
-
 
 async function votingBerry() {
     const clientId = process.env.CLIENT_ID;
@@ -84,8 +81,6 @@ async function votingBerry() {
             }
             await endProcess(chatClient);
         }
-
-
     })
 
 }
