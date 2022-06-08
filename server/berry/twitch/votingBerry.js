@@ -4,21 +4,11 @@
 const  { RefreshingAuthProvider } = require('@twurple/auth');
 
 const { promises: fs } = require('fs');
-
 const path = require('path');
-
-
 const { ChatClient } = require('@twurple/chat');
+const { TARGET } = require('./data/target');
+
 require('dotenv').config();
-
-
-
-
-const TARGET = 'hfernz';
-
-
-
-
 
 async function endProcess(chatClient) {
     await chatClient.quit();
@@ -30,7 +20,7 @@ async function votingBerry() {
     const clientSecret = process.env.CLIENT_SECRET;
     const tokenLocation = path.join(__dirname, 'tokens.json')
     const tokenData = JSON.parse(await fs.readFile(tokenLocation, 'utf8'));
-    const authProvider = new RefreshingAuthProvider(
+    const authProvider =  new RefreshingAuthProvider(
         {
             clientId,
             clientSecret,
@@ -38,20 +28,19 @@ async function votingBerry() {
         },
         tokenData
     );
-
     const chatClient = new ChatClient({ authProvider, channels: [TARGET] });
+    const bangerScores = ['420'];
+    let votes = [];
+    let voted = [];
+
+
 	await chatClient.connect();
     console.log('Voting Berry Connected');
 
     await chatClient.onRegister(() => { 
         chatClient.say(TARGET, 'Voting has Started! ');
-        
-        
     })
 
-    let votes = [];
-    let voted = [];
-    const bangerScores = ['420'];
 
     chatClient.onMessage( async (channel, user, message, self) => {
         const host = channel.substring(1)

@@ -14,14 +14,18 @@ const { periodicBerry } = require('./periodicBerry');
 const { ChatClient } = require('@twurple/chat');
 require('dotenv').config();
 
+const { TARGET } = require('./data/target');
 
-const TARGET = 'hfernz';
+
+
 
 const PINGS_URL = process.env.PINGS_URL
 
 const QUEUE_API = process.env.QUEUE_API
 
 const discordLink = 'https://discord.gg/pfZ6dH5KVy'
+
+console.log('TARGET:::::', TARGET)
 
 let pings
 
@@ -62,10 +66,18 @@ async function generalBerry() {
 
     const chatClient = new ChatClient({ authProvider, channels: [TARGET] });
 	await chatClient.connect();
-    console.log('General Berry Connected');
+
+    const date = new Date();
+
+    console.log(`General Berry Connected at ${date}`)
     periodicBerry(authProvider);
 
     chatClient.onMessage( async (channel, user, message) => { 
+        console.log(`
+        USER 🧍: ${user}  ➡ 
+        MESSAGE 💬: ${message} ➡ 
+        CHANNEL 📺:  ${channel} ➡ 
+        📆 ${date}`)
 
         switch (message){
             case '!ping':
@@ -98,6 +110,13 @@ async function generalBerry() {
                     })
                     .catch(err => {
                         console.log(err)
+                    })
+                    break;
+                case '!yomama':
+                    axios.get('https://yomomma-api.herokuapp.com/jokes')
+                    .then(res => {
+                        let yomama = res.data
+                        chatClient.say(channel, `@${user} ${yomama.joke}`)
                     })
                     break;
             default: 

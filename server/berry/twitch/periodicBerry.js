@@ -1,11 +1,6 @@
-
-const { ChatClient } = require('@twurple/chat');
 require('dotenv').config();
-
-
-
-
-const TARGET = 'hfernz';
+const { ChatClient } = require('@twurple/chat');
+const { TARGET } = require('./data/target');
 
 
 const discordLink = 'https://discord.gg/pfZ6dH5KVy'

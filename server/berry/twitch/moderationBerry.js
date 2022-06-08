@@ -2,12 +2,13 @@ const  { RefreshingAuthProvider } = require('@twurple/auth');
 const { promises: fs } = require('fs');
 const { bannedWords } = require('./data/bannedWords');
 const { ChatClient } = require('@twurple/chat');
+const { TARGET } = require('./data/target');
 require('dotenv').config();
 
 const axios = require('axios');
 const path = require('path');
 
-const TARGET = 'hfernz';
+
 
 
  const POINTS_API = process.env.POINTS_API
