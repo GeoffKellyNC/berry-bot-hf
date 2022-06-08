@@ -5,6 +5,7 @@ const cors = require('cors');
 const routerStart = require('./routes/start');
 const routerVote = require('./routes/vote');
 const routerMod = require('./routes/startMod');
+const routerStop = require('./routes/stopbot');
 
 
 
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use("/start", routerStart);
 app.use("/vote", routerVote);
 app.use("/mod", routerMod);
+app.use("/stop", routerStop);
 
 
 

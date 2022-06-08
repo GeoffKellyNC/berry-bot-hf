@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 function Voting(props) {
 
     const { 
-        botData, 
         startVote } = props;
 
   return (

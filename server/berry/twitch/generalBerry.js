@@ -10,6 +10,7 @@ const path = require('path');
 const axios = require('axios');
 
 const { periodicBerry } = require('./periodicBerry');
+const { killBerry } = require('./killBerry');
 
 const { ChatClient } = require('@twurple/chat');
 require('dotenv').config();
@@ -49,6 +50,8 @@ const addPing = (userName) => {
     )
     .catch(err => console.error(err) )
 }
+
+
 
 async function generalBerry() {
     const clientId = process.env.CLIENT_ID;
@@ -118,6 +121,12 @@ async function generalBerry() {
                         let yomama = res.data
                         chatClient.say(channel, `@${user} ${yomama.joke}`)
                     })
+                    break;
+                case '!killBerry':
+                    if (user !== 'xberrybot') return
+                    if (user === 'xberrybot'){
+                        killBerry(chatClient);
+                    }
                     break;
             default: 
                 return

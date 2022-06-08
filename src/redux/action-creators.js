@@ -9,6 +9,8 @@ const POINTS_API = process.env.REACT_APP_POINTS_API;
 
 const LOCAL_URL = process.env.REACT_APP_LOCAL_URL;
 
+const STATUS_API = process.env.REACT_APP_STATUS_API;
+
 // const QUEUE_API = 'http://localhost:9000/queue'
 
 
@@ -44,15 +46,39 @@ export const startBot = () => (dispatch) => {
     })
     .catch(err => console.error(err))
 
-  dispatch({
-    type: types.RUN_BOT,
-    payload: {
-      running: true,
-      connected: true,
-      isVoting: false
-    },
-  });
+   // change object to json
+
+  axios.patch(`${STATUS_API}`, {
+    "main_running" : true,
+    "is_connected" : true
+  })
+    .then(function (res) {
+      console.log('StartBot Res: ', res);
+    })
+    .catch(err => console.error(err))
 }
+
+export const stopBot = () => (dispatch) => {
+  axios.post(`${LOCAL_URL}/stop`, {
+    data: "stopBot"
+    })
+    .then(function (res) {
+      console.log('StopBot Res: ', res);
+    })
+    .catch(err => console.error(err))
+
+    axios.patch(`${STATUS_API}`, {
+      "main_running" : false,
+      "is_connected" : false
+    })
+      .then(function (res) {
+        console.log('StartBot Res: ', res);
+      })
+      .catch(err => console.error(err))
+  }
+
+
+
 
 export const startVote = () => (dispatch) => {
   axios.post(`${LOCAL_URL}/vote`, {
@@ -105,15 +131,6 @@ export const startMod = () => (dispatch) => {
       console.log('StartMod Res: ', res);
     })
     .catch(err => console.error(err))
-
-  dispatch({
-    type: types.START_MOD,
-    payload: {
-      running: true,
-      connected: true,
-      isMod: true
-    },
-  });
 }
 
 export const getPoints = () => (dispatch) => {
