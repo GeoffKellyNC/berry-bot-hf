@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function Moderation({ startMod, botData }) {
+function Moderation({ startMod }) {
   return (
     <ModStyled>
         <button 

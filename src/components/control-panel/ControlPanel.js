@@ -1,5 +1,7 @@
-import React from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import axios from 'axios';
 
 import * as actions from '../../redux/action-creators'
 import { connect } from 'react-redux'
@@ -12,21 +14,45 @@ import Moderation from './Moderation';
 function ControlPanel(props) {
 
     const { 
-        botData, 
         startBot,
         reloadServer,
-        startMod
+        startMod,
+        stopBot
         } = props;
+
+
+    const [ botData, setBotData ] = useState({})
+
+    const STATUS_API = process.env.REACT_APP_STATUS_API;
+
+    function getBotData () {
+        axios.get(STATUS_API)
+        .then(res => {
+            setBotData(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    useEffect(  () => {
+        async function onLoad () {
+            await getBotData()
+        }
+        onLoad()
+    }, []);
+
+
 
 
     return (
         <ControlPanelStyled>
             <h2 className = 'control-header'> Bot Controls </h2>
             <div className='control-btns'>
-                <BotPower botData={botData} startBot={startBot} />
-                <ReloadBot reloadServer={reloadServer} botData = {botData} />
+                <BotPower  startBot={startBot} botData = {botData} getBotData = {getBotData} stopBot = {stopBot} />
+                <ReloadBot reloadServer={reloadServer}  />
                 <Voting  />
-                <Moderation botData = {botData} startMod = {startMod} />
+                <Moderation  startMod = {startMod} />
             </div>
         </ControlPanelStyled>
     )
