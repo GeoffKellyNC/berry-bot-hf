@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import Nav from "./Nav";
 
 function Header() {
   return (
@@ -9,7 +8,7 @@ function Header() {
       <p className="header-title">Berry Bot HQ</p>
       <p className = 'tag-text'>Berry Bot Command</p>
       <p className = 'version-text'>Version 1.1.0</p>
-    </HeaderStyled>
+    </HeaderStyled> 
   );
 }
 
