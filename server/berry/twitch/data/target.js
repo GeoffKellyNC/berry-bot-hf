@@ -1,4 +1,4 @@
 
-const TARGET= 'xberrybot';
+const TARGET= 'hfernz';
 
 module.exports = {TARGET}
