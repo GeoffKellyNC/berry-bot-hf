@@ -8,6 +8,7 @@ function Header() {
     <HeaderStyled>
       <p className="header-title">Berry Bot HQ</p>
       <p className = 'tag-text'>Berry Bot Command</p>
+      <p className = 'version-text'>Version 1.0.0</p>
       <Nav />
     </HeaderStyled>
   );
@@ -35,5 +36,11 @@ const HeaderStyled = styled.div`
   .header-title {
     font-size: ${(pr) => pr.theme.fontSizes.large};
     font-family: ${(pr) => pr.theme.fonts.primary};
+  }
+
+  .version-text {
+    font-size: ${(pr) => pr.theme.fontSizes.small};
+    font-family: ${(pr) => pr.theme.fonts.primary};
+    color: ${(pr) => pr.theme.colors.primary};
   }
 `
