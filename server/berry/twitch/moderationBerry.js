@@ -118,6 +118,10 @@ const path = require('path');
         chatClient.say(TARGET, 'Chat Moderation is active');
     })
 
+    await chatClient.onRegister(() => { 
+        chatClient.say(TARGET, 'Berry Bot Has Joined the chat! ');
+    })
+
     chatClient.onMessage( async (channel, user, message, self) => {
         await processMessage(user, message, pointsData, chatClient, channel)
 
